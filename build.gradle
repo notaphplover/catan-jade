@@ -1,0 +1,77 @@
+plugins {
+    id 'com.diffplug.gradle.spotless' version '3.28.0'
+    id 'jacoco'
+    id 'java-library'
+}
+
+group 'io.github.notaphplover.catan-jade'
+version '0.1.0'
+
+sourceCompatibility = 1.11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation('com.diffplug.spotless:spotless-plugin-gradle:3.28.0')
+    implementation('com.fasterxml.jackson.core:jackson-databind:2.10.3')
+    implementation('com.tilab.jade:jade:4.5.0')
+    implementation('io.github.notaphplover:catan-core:0.4.0')
+
+    testImplementation('org.mockito:mockito-core:3.3.3')
+    testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
+    testImplementation('org.junit.platform:junit-platform-commons:1.6.2')
+}
+
+jacoco {
+    toolVersion = "0.8.4"
+    reportsDir = file("$buildDir/reports/jacoco")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/reports/jacoco/jacocoHtml")
+    }
+}
+
+repositories {
+    maven {
+    
+        url('https://jade.tilab.com/maven/')
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ["src"]
+        }
+    }
+    test {
+        java {
+            srcDirs = ["test"]
+        }
+    }
+}
+
+spotless {
+  java {
+    googleJavaFormat()
+  }
+}
+
+task copyToLib(type: Copy) {
+    into "$buildDir/libs"
+    from configurations.runtimeClasspath
+}
+
+test {
+
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
