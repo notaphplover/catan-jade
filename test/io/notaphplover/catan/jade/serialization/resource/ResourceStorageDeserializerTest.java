@@ -6,7 +6,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-
 import io.github.notaphplover.catan.core.resource.IResourceStorage;
 import io.github.notaphplover.catan.core.resource.ResourceStorage;
 import io.github.notaphplover.catan.core.resource.ResourceType;
