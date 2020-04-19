@@ -53,7 +53,7 @@ public class ResourceStorageDeserializerTest {
 
       SimpleModule module = new SimpleModule();
       module.addDeserializer(
-          IResourceStorage.class, new ResourceStorageDeserializer(ResourceStorage.class));
+          IResourceStorage.class, new ResourceStorageDeserializer(IResourceStorage.class));
       objectMapper.registerModule(module);
 
       assertEquals(
