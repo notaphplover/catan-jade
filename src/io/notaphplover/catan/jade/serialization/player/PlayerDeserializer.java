@@ -19,7 +19,7 @@ import java.util.Collection;
 
 public class PlayerDeserializer extends StdDeserializer<IPlayer> {
 
-  protected PlayerDeserializer(Class<? extends IPlayer> vc) {
+  public PlayerDeserializer(Class<? extends IPlayer> vc) {
     super(vc);
   }
 
@@ -40,6 +40,8 @@ public class PlayerDeserializer extends StdDeserializer<IPlayer> {
     while (p.currentToken() != JsonToken.END_OBJECT) {
       extractProperty(builder, p, ctxt);
     }
+
+    p.nextToken();
 
     Player player = new Player(builder.getId(), builder.getResourceManager());
 
