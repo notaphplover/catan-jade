@@ -32,18 +32,14 @@ public abstract class BaseResourceStorageDeserializer<R extends IResourceStorage
 
   private static void extractResource(JsonParser p, Map<ResourceType, Integer> resources)
       throws IOException {
-    switch (p.currentToken()) {
-      case FIELD_NAME:
-        {
-          String resourceName = p.getText();
-          p.nextToken();
-          extractResourceValue(p, resources, resourceName);
 
-          break;
-        }
-      default:
-        throw new JsonParseException(p, String.format("Expected a %s token", p.currentToken()));
+    if (p.currentToken() != JsonToken.FIELD_NAME) {
+      throw new JsonParseException(p, String.format("Expected a %s token", p.currentToken()));
     }
+
+    String resourceName = p.getText();
+    p.nextToken();
+    extractResourceValue(p, resources, resourceName);
   }
 
   private static Map<ResourceType, Integer> extractResourcesMap(JsonParser p) throws IOException {
@@ -53,7 +49,9 @@ public abstract class BaseResourceStorageDeserializer<R extends IResourceStorage
 
     Map<ResourceType, Integer> resources = new TreeMap<>();
 
-    while (p.nextToken() != JsonToken.END_OBJECT) {
+    p.nextToken();
+
+    while (p.currentToken() != JsonToken.END_OBJECT) {
 
       extractResource(p, resources);
     }
@@ -66,17 +64,13 @@ public abstract class BaseResourceStorageDeserializer<R extends IResourceStorage
   private static void extractResourceValue(
       JsonParser p, Map<ResourceType, Integer> resources, String resourceName)
       throws JsonParseException, IOException {
-    switch (p.currentToken()) {
-      case VALUE_NUMBER_INT:
-        {
-          int value = p.getIntValue();
 
-          resources.put(ResourceType.valueOf(resourceName), value);
-
-          break;
-        }
-      default:
-        throw new JsonParseException(p, String.format("Expected a %s token", p.currentToken()));
+    if (p.currentToken() != JsonToken.VALUE_NUMBER_INT) {
+      throw new JsonParseException(p, String.format("Expected a %s token", p.currentToken()));
     }
+
+    int value = p.getIntValue();
+    resources.put(ResourceType.valueOf(resourceName), value);
+    p.nextToken();
   }
 }

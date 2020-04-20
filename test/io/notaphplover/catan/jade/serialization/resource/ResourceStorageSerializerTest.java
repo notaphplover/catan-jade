@@ -36,7 +36,7 @@ public class ResourceStorageSerializerTest {
       SimpleModule module = new SimpleModule();
       module.addSerializer(IResourceStorage.class, new ResourceStorageSerializer());
       module.addDeserializer(
-          IResourceStorage.class, new ResourceStorageDeserializer(ResourceStorage.class));
+          IResourceStorage.class, new ResourceStorageDeserializer(IResourceStorage.class));
       objectMapper.registerModule(module);
 
       String serializedJson = objectMapper.writeValueAsString(storage);
