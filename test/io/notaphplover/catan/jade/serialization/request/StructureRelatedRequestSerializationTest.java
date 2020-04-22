@@ -15,15 +15,16 @@ import io.github.notaphplover.catan.core.player.IPlayer;
 import io.github.notaphplover.catan.core.player.Player;
 import io.github.notaphplover.catan.core.request.BuildStructureRequest;
 import io.github.notaphplover.catan.core.request.IBuildStructureRequest;
+import io.github.notaphplover.catan.core.request.IStructureRelatedRequest;
 import io.github.notaphplover.catan.core.request.RequestType;
 import io.github.notaphplover.catan.core.resource.ResourceManager;
 
-@DisplayName("BuildStructureRequest serialization test")
-public class BuildStructureRequestSerializationTest {
+@DisplayName("StructureRelatedRequest serialization test")
+public class StructureRelatedRequestSerializationTest {
 
-  @DisplayName("BuildStructureRequest serialization test")
+  @DisplayName("StructureRelatedRequest serialization test")
   @Nested
-  class Serialization extends BuildElementRequestTestProvider<IBuildStructureRequest> {
+  class Serialization extends BuildElementRequestTestProvider<IStructureRelatedRequest> {
 
     private final StructureType TEST_STRUCTURE_TYPE = StructureType.SETTLEMENT;
 
@@ -46,8 +47,8 @@ public class BuildStructureRequestSerializationTest {
     }
 
     @Override
-    protected JsonSerializer<IBuildStructureRequest> buildRequestSerializer() {
-      return new BuildStructureRequestSerializer();
+    protected JsonSerializer<IStructureRelatedRequest> buildRequestSerializer() {
+      return new StructureRelatedRequestSerializer();
     }
 
     @Override
@@ -94,13 +95,13 @@ public class BuildStructureRequestSerializationTest {
     }
 
     @Override
-    protected Class<IBuildStructureRequest> getSerializerType() {
-      return IBuildStructureRequest.class;
+    protected Class<IStructureRelatedRequest> getSerializerType() {
+      return IStructureRelatedRequest.class;
     }
 
     @Override
     protected void itMustSerializeARequestAssertions(
-        IBuildStructureRequest expected, IBuildStructureRequest actual) {
+        IStructureRelatedRequest expected, IStructureRelatedRequest actual) {
       super.itMustSerializeARequestAssertions(expected, actual);
 
       assertSame(expected.getStructureType(), actual.getStructureType());
