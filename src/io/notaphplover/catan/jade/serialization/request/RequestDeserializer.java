@@ -20,6 +20,7 @@ import io.github.notaphplover.catan.core.request.EndTurnRequest;
 import io.github.notaphplover.catan.core.request.IRequest;
 import io.github.notaphplover.catan.core.request.RequestType;
 import io.github.notaphplover.catan.core.request.StartTurnRequest;
+import io.github.notaphplover.catan.core.request.UpgradeStructureRequest;
 import io.notaphplover.catan.jade.serialization.request.builder.IRequestBuilder;
 import io.notaphplover.catan.jade.serialization.request.builder.RequestBuilder;
 import java.io.IOException;
@@ -273,6 +274,9 @@ public class RequestDeserializer extends StdDeserializer<IRequest> {
         return new EndTurnRequest(builder.getPlayer());
       case START_TURN:
         return new StartTurnRequest(builder.getPlayer());
+      case UPGRADE_STRUCTURE:
+        return new UpgradeStructureRequest(
+            builder.getPlayer(), builder.getStructureType(), builder.getX(), builder.getY());
       default:
         throw new JsonParseException(
             p, String.format("Request type %s not supported", builder.getType()));
