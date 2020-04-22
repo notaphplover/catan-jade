@@ -4,11 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-
 import io.github.notaphplover.catan.core.board.BoardElementType;
 import io.github.notaphplover.catan.core.board.structure.StructureType;
 import io.github.notaphplover.catan.core.player.IPlayer;
@@ -18,6 +13,9 @@ import io.github.notaphplover.catan.core.request.IBuildStructureRequest;
 import io.github.notaphplover.catan.core.request.IStructureRelatedRequest;
 import io.github.notaphplover.catan.core.request.RequestType;
 import io.github.notaphplover.catan.core.resource.ResourceManager;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 @DisplayName("StructureRelatedRequest serialization test")
 public class StructureRelatedRequestSerializationTest {
