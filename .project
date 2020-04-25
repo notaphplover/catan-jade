@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>catan-jade</name>
-	<comment>Project catan-jade created by Buildship.</comment>
+	<name>catan-serialization</name>
 	<projects>
 	</projects>
 	<buildSpec>

@@ -4,7 +4,7 @@ plugins {
     id 'java-library'
 }
 
-group 'io.github.notaphplover.catan-jade'
+group 'io.github.notaphplover.catan-serialization'
 version '0.1.0'
 
 sourceCompatibility = 1.11
@@ -16,7 +16,6 @@ repositories {
 dependencies {
     implementation('com.diffplug.spotless:spotless-plugin-gradle:3.28.0')
     implementation('com.fasterxml.jackson.core:jackson-databind:2.10.3')
-    implementation('com.tilab.jade:jade:4.5.0')
     implementation('io.github.notaphplover:catan-core:0.5.0')
 
     testImplementation('org.mockito:mockito-core:3.3.3')
@@ -34,13 +33,6 @@ jacocoTestReport {
         xml.enabled false
         csv.enabled false
         html.destination file("${buildDir}/reports/jacoco/jacocoHtml")
-    }
-}
-
-repositories {
-    maven {
-    
-        url('https://jade.tilab.com/maven/')
     }
 }
 
