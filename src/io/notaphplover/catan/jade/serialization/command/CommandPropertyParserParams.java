@@ -3,7 +3,6 @@ package io.notaphplover.catan.jade.serialization.command;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
-
 import io.notaphplover.catan.jade.serialization.command.builder.ICommandBuilder;
 
 public class CommandPropertyParserParams implements ICommandPropertyParserParams {
@@ -16,7 +15,8 @@ public class CommandPropertyParserParams implements ICommandPropertyParserParams
 
   private JsonParser parser;
 
-  public CommandPropertyParserParams(ICommandBuilder builder, DeserializationContext context, JsonParser parser) {
+  public CommandPropertyParserParams(
+      ICommandBuilder builder, DeserializationContext context, JsonParser parser) {
 
     this.builder = builder;
     this.context = context;
@@ -47,5 +47,4 @@ public class CommandPropertyParserParams implements ICommandPropertyParserParams
   public void setException(JsonProcessingException exception) {
     this.exception = exception;
   }
-
 }

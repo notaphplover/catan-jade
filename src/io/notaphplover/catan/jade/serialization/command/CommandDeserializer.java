@@ -1,10 +1,5 @@
 package io.notaphplover.catan.jade.serialization.command;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Consumer;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,13 +8,16 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-
 import io.github.notaphplover.catan.core.command.Command;
 import io.github.notaphplover.catan.core.command.CommandType;
 import io.github.notaphplover.catan.core.command.ICommand;
 import io.github.notaphplover.catan.core.player.IPlayer;
 import io.notaphplover.catan.jade.serialization.command.builder.CommandBuilder;
 import io.notaphplover.catan.jade.serialization.command.builder.ICommandBuilder;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class CommandDeserializer extends StdDeserializer<ICommand> {
 
@@ -34,8 +32,9 @@ public class CommandDeserializer extends StdDeserializer<ICommand> {
   }
 
   @Override
-  public ICommand deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-    
+  public ICommand deserialize(JsonParser p, DeserializationContext ctxt)
+      throws IOException, JsonProcessingException {
+
     if (p.getCurrentToken() != JsonToken.START_OBJECT) {
       throw new JsonParseException(p, String.format("Expected a %s token", JsonToken.START_OBJECT));
     }
@@ -48,7 +47,7 @@ public class CommandDeserializer extends StdDeserializer<ICommand> {
 
       extractProperty(builder, p, ctxt);
     }
-    
+
     return createCommandFromBuilder(p, builder);
   }
 
@@ -107,12 +106,12 @@ public class CommandDeserializer extends StdDeserializer<ICommand> {
         (ICommandPropertyParserParams params) -> {
           extractPlayerProperty(params);
         });
-    
+
     this.consumersMap.put(
-          CommandFields.FIELD_TYPE,
-          (ICommandPropertyParserParams params) -> {
-            extractTypeProperty(params);
-          });
+        CommandFields.FIELD_TYPE,
+        (ICommandPropertyParserParams params) -> {
+          extractTypeProperty(params);
+        });
   }
 
   private ICommand createCommandFromBuilder(JsonParser p, ICommandBuilder builder)
@@ -155,5 +154,4 @@ public class CommandDeserializer extends StdDeserializer<ICommand> {
       throw params.getException();
     }
   }
-
 }

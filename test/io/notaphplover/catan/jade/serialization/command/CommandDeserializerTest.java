@@ -6,11 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-
 import io.github.notaphplover.catan.core.command.Command;
 import io.github.notaphplover.catan.core.command.CommandType;
 import io.github.notaphplover.catan.core.command.ICommand;
@@ -22,6 +17,9 @@ import io.notaphplover.catan.jade.serialization.player.PlayerDeserializer;
 import io.notaphplover.catan.jade.serialization.player.PlayerSerializer;
 import io.notaphplover.catan.jade.serialization.resource.ResourceManagerDeserializer;
 import io.notaphplover.catan.jade.serialization.resource.ResourceStorageSerializer;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 @DisplayName("CommandDeserializer tests")
 public class CommandDeserializerTest {
@@ -37,9 +35,12 @@ public class CommandDeserializerTest {
       IPlayer player = new Player(1, new ResourceManager());
       ICommand command = new Command(player, CommandType.SEND_NORMAL_REQUEST);
 
-      ObjectMapper objectSerializer = new ObjectMapper().registerModule(new SimpleModule()
-          .addSerializer(IResourceManager.class, new ResourceStorageSerializer())
-          .addSerializer(IPlayer.class, new PlayerSerializer()));
+      ObjectMapper objectSerializer =
+          new ObjectMapper()
+              .registerModule(
+                  new SimpleModule()
+                      .addSerializer(IResourceManager.class, new ResourceStorageSerializer())
+                      .addSerializer(IPlayer.class, new PlayerSerializer()));
 
       String serializedPlayer = objectSerializer.writeValueAsString(player);
 
@@ -50,19 +51,24 @@ public class CommandDeserializerTest {
               command.getType().toString(),
               CommandFields.FIELD_DESTINATARY,
               serializedPlayer);
-      
-      ObjectMapper objectDeserializer = new ObjectMapper().registerModule(
-          new SimpleModule()
-              .addDeserializer(
-                  IResourceManager.class, new ResourceManagerDeserializer(IResourceManager.class))
-              .addDeserializer(IPlayer.class, new PlayerDeserializer(IPlayer.class))
-              .addDeserializer(ICommand.class, new CommandDeserializer(ICommand.class)));
+
+      ObjectMapper objectDeserializer =
+          new ObjectMapper()
+              .registerModule(
+                  new SimpleModule()
+                      .addDeserializer(
+                          IResourceManager.class,
+                          new ResourceManagerDeserializer(IResourceManager.class))
+                      .addDeserializer(IPlayer.class, new PlayerDeserializer(IPlayer.class))
+                      .addDeserializer(ICommand.class, new CommandDeserializer(ICommand.class)));
 
       ICommand deserializedCommand = objectDeserializer.readValue(serializedEntity, ICommand.class);
 
       assertSame(command.getType(), deserializedCommand.getType());
       assertSame(command.getDestinatary().getId(), deserializedCommand.getDestinatary().getId());
-      assertEquals(command.getDestinatary().getResourceManager(), deserializedCommand.getDestinatary().getResourceManager());
+      assertEquals(
+          command.getDestinatary().getResourceManager(),
+          deserializedCommand.getDestinatary().getResourceManager());
     }
   }
 }

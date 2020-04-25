@@ -1,12 +1,11 @@
 package io.notaphplover.catan.jade.serialization.command;
 
-import java.io.IOException;
-
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import io.github.notaphplover.catan.core.command.ICommand;
 import io.github.notaphplover.catan.core.player.IPlayer;
+import java.io.IOException;
 
 public abstract class BaseCommandSerializer<C extends ICommand> extends StdSerializer<C> {
 

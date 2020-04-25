@@ -28,5 +28,4 @@ public class CommandBuilder implements ICommandBuilder {
   public void setType(CommandType type) {
     this.type = type;
   }
-
 }
