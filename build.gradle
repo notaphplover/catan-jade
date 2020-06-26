@@ -2,6 +2,8 @@ plugins {
     id 'com.diffplug.gradle.spotless' version '3.28.0'
     id 'jacoco'
     id 'java-library'
+    id 'maven-publish'
+    id 'signing'
 }
 
 group 'io.github.notaphplover.catan-serialization'
@@ -34,6 +36,64 @@ jacocoTestReport {
         csv.enabled false
         html.destination file("${buildDir}/reports/jacoco/jacocoHtml")
     }
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'io.github.notaphplover'
+            artifactId = 'catan-serialization'
+            version = '0.1.0'
+
+            from components.java
+
+            pom {
+                name = 'Catan serialization'
+                description = 'JSON serialization library for the game'
+                url = 'https://github.com/notaphplover/catan-serialization'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'notaphplover'
+                        name = 'Roberto Pintos López'
+                        email = 'roberto.pintos.lopez@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/notaphplover/catan-serialization.git'
+                    developerConnection = 'scm:git:https://github.com/notaphplover/catan-serialization.git'
+                    url = 'https://github.com/notaphplover/catan-serialization/'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username sonatypeUsername
+                password sonatypePassword
+            }
+        }
+    }
+}
+
+signing {
+    useGpgCmd()
+    sign publishing.publications.mavenJava
 }
 
 sourceSets {
